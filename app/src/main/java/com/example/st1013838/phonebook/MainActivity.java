@@ -45,14 +45,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void DeleteButton (View view){
-        String selection = "FirstName = \"" + FirstName.getText().toString() + "\"";
-        //String selection2 = "LastName = \"" + LastName.getText().toString() + "\"";
+        String FName = FirstName.getText().toString();
+        String LName = LastName.getText().toString();
 
-        int result = getContentResolver().delete(MyContentProvider.CONTENT_URI, selection, null);
+        int result = getContentResolver().delete(MyContentProvider.CONTENT_URI, "FirstName = ? AND LastName = ?", new String[]{FirstName.getText().toString(), LastName.getText().toString()});
         if (result > 0){
             FirstName.setText("");
             LastName.setText("");
             PhoneNumber.setText("");
+            Toast.makeText(this, FName + " " + LName + " deleted from contacts.", Toast.LENGTH_SHORT).show();
+
         }
         else
             Toast.makeText(this, "No Match found.", Toast.LENGTH_SHORT).show();
